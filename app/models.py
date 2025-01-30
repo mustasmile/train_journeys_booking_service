@@ -1,3 +1,5 @@
+#models.py file contains the database models for the application. The Train model represents the train details and the Reservation model represents the reservation details. The relationship between the Train and Reservation models is defined using the db.relationship() method.
+
 from app import db
 
 class Train(db.Model):

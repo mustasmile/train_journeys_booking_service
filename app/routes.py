@@ -1,8 +1,9 @@
-from app import app, db
-from flask import request, jsonify
-from app.models import Train, Reservation
+#routes.py
 
-# Route pour rechercher les trains
+from app import app, db
+from flask import render_template, request, jsonify
+from app.models import Train
+
 @app.route('/search_trains', methods=['GET'])
 def search_trains():
     departure = request.args.get('departure')
@@ -12,8 +13,8 @@ def search_trains():
     trains = Train.query.filter_by(departure=departure, arrival=arrival, class_type=travel_class).all()
 
     if not trains:
-        return jsonify({'message': 'No available trains.'}), 404
-
+        return render_template('search_trains.html', message="No available trains.")
+    
     result = []
     for train in trains:
         result.append({
@@ -23,7 +24,8 @@ def search_trains():
             'seats_available': train.seats_available,
             'class_type': train.class_type
         })
-    return jsonify(result)
+
+    return render_template('search_trains.html', trains=result)
 
 # Route pour réserver un train
 @app.route('/reserve_train', methods=['POST'])

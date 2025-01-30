@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Search</title>
+</head>
+<body>
+    <h1>Search for Trains</h1>
+    <form action="/search_trains" method="get">
+        <label for="departure">Departure:</label>
+        <input type="text" id="departure" name="departure" required><br><br>
+
+        <label for="arrival">Arrival:</label>
+        <input type="text" id="arrival" name="arrival" required><br><br>
+
+        <label for="travel_class">Class:</label>
+        <select id="travel_class" name="travel_class">
+            <option value="First">First</option>
+            <option value="Business">Business</option>
+            <option value="Standard">Standard</option>
+        </select><br><br>
+
+        <input type="submit" value="Search">
+    </form>
+
+    {% if trains %}
+        <h2>Available Trains</h2>
+        <ul>
+            {% for train in trains %}
+                <li>
+                    Train ID: {{ train.train_id }} - Departure: {{ train.departure_time }} - Arrival: {{ train.arrival_time }} 
+                    - Seats Available: {{ train.seats_available }} - Class: {{ train.class_type }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+</body>
+</html>
